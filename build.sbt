@@ -3,36 +3,41 @@ releaseSettings
 organization in ThisBuild := "net.kaliber"
 
 scalaVersion in ThisBuild := "2.11.6"
-          
+
 crossScalaVersions in ThisBuild := Seq(scalaVersion.value)
 
 lazy val root = project.in( file(".") )
   .settings(
     name := "scala-command-utilities",
-    publish := (),
-    publishLocal := ()
+    publishArtifact := false
   )
+  // The release requires this setting to be present on root
+  .settings(publishSettings: _*)
   .aggregate(core, play)
-  
+
 lazy val core = project.in( file("core") )
   .settings(
     name := "scala-command-utilities-core"
   )
+  .settings(publishSettings: _*)
   .settings(testSettings: _*)
-  
+
 lazy val play = project.in( file("play") )
   .settings(
     name := "scala-command-utilities-play"
   )
-  .settings(testSettings: _*)
+  .settings(publishSettings: _*)
   .settings(playSettings: _*)
+  .settings(testSettings: _*)
   .dependsOn(core % "compile->compile;test->test")
-  
-publishTo := {
-  val repo = if (version.value endsWith "SNAPSHOT") "snapshot" else "release"
-  Some("Rhinofly Internal " + repo.capitalize + " Repository" at 
-    "http://maven-repository.rhinofly.net:8081/artifactory/libs-" + repo + "-local")
-}
+
+lazy val publishSettings = Seq(
+  publishTo := {
+    val repo = if (version.value endsWith "SNAPSHOT") "snapshot" else "release"
+    Some("Rhinofly Internal " + repo.capitalize + " Repository" at
+      "http://maven-repository.rhinofly.net:8081/artifactory/libs-" + repo + "-local")
+  }
+)
 
 lazy val testSettings = Seq(
   testFrameworks += new TestFramework("org.qirx.littlespec.sbt.TestFramework"),
