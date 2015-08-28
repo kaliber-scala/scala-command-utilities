@@ -58,9 +58,9 @@ This library consists of two parts:
 ##Installation
 
 ``` scala
-libraryDependencies += "net.kaliber" %% "scala-command-utilities-core" % "0.1"
+libraryDependencies += "net.kaliber" %% "scala-command-utilities-core" % "0.2"
 // if you are using play use the following (you can skip the core as it's automatically loaded)
-libraryDependencies += "net.kaliber" %% "scala-command-utilities-play" % "0.1"
+libraryDependencies += "net.kaliber" %% "scala-command-utilities-play" % "0.2"
 
 resolvers += "Rhinofly Repository" at "http://maven-repository.rhinofly.net:8081/artifactory/libs-release-local"
 ```

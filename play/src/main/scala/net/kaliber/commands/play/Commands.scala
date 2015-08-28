@@ -18,7 +18,7 @@ object Commands {
 
   def apply[A](bodyParser: BodyParser[A])(command: Request[A] => Command[Result])(implicit errorHandler: ErrorHandler): Action[A] =
     Action.async(bodyParser) { request =>
-      commandToResult(command(request)) recover errorHandler(request)
+      commandToResult(command(request)) recover PartialFunction(errorHandler(request))
     }
 
   // There is no version of `apply` with the following signature:

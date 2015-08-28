@@ -5,8 +5,8 @@ import play.api.mvc.RequestHeader
 
 class ErrorHandler(f: (RequestHeader, Throwable) => Result) {
 
-  def apply(request: RequestHeader): PartialFunction[Throwable, Result] =
-    PartialFunction(f(request, _))
+  def apply(request: RequestHeader): Throwable => Result =
+    f(request, _)
 }
 
 object ErrorHandler {
